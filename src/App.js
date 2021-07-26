@@ -1,7 +1,7 @@
 import React from 'react';
 import records from './sample.json';
 import './App.css';
-import Payment from './components/Payment'
+
 
 
 
@@ -9,23 +9,30 @@ class App extends React.Component {
 
 
   //data from sample.json will be represented by "records", remittance advice/reciept will be represented by "remAdvice" and
-  //is the current selected customer, and "find" is the input used to locate the customer's records.
+  //is the current selected customer.
   state = {
     records: [],
     remAdvice: '',
-    // receipt: []
+
 
   }
 
 
   //sets the state to the correct invoice when Paymerang employees click on a customer
   handleCustomerClick = (advice, e) => {
+    let f = ''
     e.preventDefault();
-    this.setState({
-      remAdvice: advice,
+    advice.filter(filtered => {
 
+      f = filtered
+      console.log(filtered)
+
+      return f
     })
-    console.log(advice)
+    this.setState({
+      remAdvice: f
+    })
+    console.log(f)
     console.log('Paymerang is awesome!')
   }
 
@@ -34,22 +41,15 @@ class App extends React.Component {
     this.setState({ records })
   }
 
-  // handleStateChange(advice, e){
-  //   if(e.event.target === {client}){
-  //     this.setState({
-  //       remAdvice: advice[client]
-  //     })
-  //   }
-  // }
- 
-
 
   render() {
-
+    //maps through the records and creates the basic format display in which we will view our advice/receipts
     const { records } = this.state
     const advice = records.map(recordsIn => {
+      console.log(recordsIn.Payee.Name)
       return (
-        <div key={recordsIn.Payee.Name}>
+        <div className='info' key={recordsIn.Payee.Name}>
+
           <h2>Payee</h2>
         Name: {recordsIn.Payee.Name}<br />
         Fax: {recordsIn.Payee.Fax}<br />
@@ -69,18 +69,18 @@ class App extends React.Component {
         Exp: {recordsIn.Payment.Exp}<br />
 
           <h2>Remittance</h2>
-          <ul>
+          <ul key={recordsIn.Payee.Name}>
             {recordsIn.Remittance.map(remit => {
               return (
-                <ul>
+                <ul key={remit.PayorName}>
                   <li key={remit.PayorId}>Payor Name: {remit.PayorName}</li>
                   <li>Payor Id: {remit.PayorId}</li>
                   <li>Invoice No: {remit.InvoiceNo}</li>
                   <li>Descriptiom: {remit.Description}</li>
                   <li>Amount: {remit.Amount}</li>
-                  <br/>
+                  <br />
                 </ul>
-                
+
               )
             })}
           </ul>
@@ -93,45 +93,21 @@ class App extends React.Component {
     //map through the records to single out the Payee Name
     const clients = records.map(client => client.Payee.Name)
 
-  
     console.log(clients)
-    // console.log(this.state.remAdvice)
-    console.log(advice)
-
-
-    const filterClients = advice.filter(fc => {
-      console.log(advice)
-      return advice.client
-    })
-
     
-
-
     return (
 
+      
+      <div className='body'>
 
-      <div >
+        <div className='top'><header > <h1 className='title'> Paymerang </h1> </header></div>
 
-        <header> <h1> Paymerang </h1> </header>
-
-
-        <div >{clients.map(client => <li key={client.toString()}><button onClick={(e) => this.handleCustomerClick(advice, e)} >
+        <h2>Select client for payment info</h2>
+        <div className='buttonz'>{clients.map(client => <li className='buttonlist' key={client.toString()}><button className='button' onClick={(e) => this.handleCustomerClick(advice, e)} >
           {client}
         </button></li>)}</div><br />
-        {/* <div>{<React.Fragment>{advice}</React.Fragment>}</div> */}
-        <div>{this.state.remAdvice}</div>
 
-
-
-        <div>
-          {/* <Payment
-            lion={this.state.remAdvice}
-          tiger = {invoice}
-          bear={this.state.remAdvice}
-                   
-      
-          /> */}
-        </div>
+        <div className='advice'>{this.state.remAdvice}</div>
 
       </div>
 
