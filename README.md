@@ -1,4 +1,4 @@
-# Paymerang technical challenge
+# Paymerang technical test
 ## live-link:  https://paymerang-tech-test.vercel.app 
 ### Technologies used:
     - HTML
