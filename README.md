@@ -6,3 +6,7 @@
     - jQuery
     - React.js
     - Vercel
+<<<<<<< HEAD
+=======
+    
+>>>>>>> c2aae257d58da3ca4bda624d8e67f739aed5b837
