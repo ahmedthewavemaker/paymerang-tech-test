@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import './Pay.css'
+import React from 'react'
 import '../index.css'
 
 
